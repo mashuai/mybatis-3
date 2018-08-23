@@ -44,6 +44,7 @@ import org.apache.ibatis.type.JdbcType;
 
 /**
  * @author Clinton Begin
+ * 读取xml配置构建Configuration
  */
 public class XMLConfigBuilder extends BaseBuilder {
 
@@ -93,6 +94,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     return configuration;
   }
 
+  // 构建Configuration
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first

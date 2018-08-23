@@ -28,15 +28,16 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author Clinton Begin
+ * 对DOM Node进行封装
  */
 public class XNode {
 
   private Node node;
-  private String name;
-  private String body;
-  private Properties attributes;
-  private Properties variables;
-  private XPathParser xpathParser;
+  private String name;// node 名称
+  private String body;// node 内容
+  private Properties attributes; //node属性
+  private Properties variables; // node变量
+  private XPathParser xpathParser; //xpath parser
 
   public XNode(XPathParser xpathParser, Node node, Properties variables) {
     this.xpathParser = xpathParser;

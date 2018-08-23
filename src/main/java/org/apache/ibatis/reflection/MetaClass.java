@@ -28,6 +28,7 @@ import org.apache.ibatis.reflection.property.PropertyTokenizer;
 
 /**
  * @author Clinton Begin
+ * 对Class的一种封装
  */
 public class MetaClass {
 
@@ -53,7 +54,7 @@ public class MetaClass {
     Class<?> propType = reflector.getGetterType(name);
     return MetaClass.forClass(propType);
   }
-
+  //通过PropertyTokenizer解析
   public String findProperty(String name) {
     StringBuilder prop = buildProperty(name, new StringBuilder());
     return prop.length() > 0 ? prop.toString() : null;

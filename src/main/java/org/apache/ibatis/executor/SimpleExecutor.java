@@ -32,6 +32,8 @@ import org.apache.ibatis.transaction.Transaction;
 
 /**
  * @author Clinton Begin
+ * 默认简单的处理器使用Statement PrepareStatement 处理SQL语句
+ *
  */
 public class SimpleExecutor extends BaseExecutor {
 

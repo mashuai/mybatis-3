@@ -26,8 +26,9 @@ import org.apache.ibatis.session.SqlSession;
 /**
  * @author Clinton Begin
  * @author Eduardo Macarron
+ * mapper 代理
  */
-public class MapperProxy<T> implements InvocationHandler, Serializable {
+public class  MapperProxy<T> implements InvocationHandler, Serializable {
 
   private static final long serialVersionUID = -6424540398559729838L;
   private final SqlSession sqlSession;
@@ -42,7 +43,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-    if (Object.class.equals(method.getDeclaringClass())) {
+    if (Object.class.equals(method.getDeclaringClass())) { // 判断是否是类，如果不是执行代理的方法，是执行类方法
       try {
         return method.invoke(this, args);
       } catch (Throwable t) {
@@ -53,6 +54,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     return mapperMethod.execute(sqlSession, args);
   }
 
+  // 获取MapperMethod
   private MapperMethod cachedMapperMethod(Method method) {
     MapperMethod mapperMethod = methodCache.get(method);
     if (mapperMethod == null) {

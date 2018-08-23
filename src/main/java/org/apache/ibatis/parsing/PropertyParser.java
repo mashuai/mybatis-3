@@ -25,7 +25,7 @@ public class PropertyParser {
   private PropertyParser() {
     // Prevent Instantiation
   }
-
+  // 委托给GenericTokenParser进行替换
   public static String parse(String string, Properties variables) {
     VariableTokenHandler handler = new VariableTokenHandler(variables);
     GenericTokenParser parser = new GenericTokenParser("${", "}", handler);

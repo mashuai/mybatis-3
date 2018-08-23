@@ -45,6 +45,7 @@ public class MapperMethod {
     this.method = new MethodSignature(config, method);
   }
 
+  // 执行sql
   public Object execute(SqlSession sqlSession, Object[] args) {
     Object result;
     if (SqlCommandType.INSERT == command.getType()) {

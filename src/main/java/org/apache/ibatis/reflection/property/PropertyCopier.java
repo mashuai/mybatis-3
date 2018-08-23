@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 
 /**
  * @author Clinton Begin
+ * 复制bean
  */
 public final class PropertyCopier {
 

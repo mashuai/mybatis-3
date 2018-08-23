@@ -32,6 +32,7 @@ import org.apache.ibatis.io.ResolverUtil;
 
 /**
  * @author Clinton Begin
+ * 注册TypeHandler
  */
 public final class TypeHandlerRegistry {
 

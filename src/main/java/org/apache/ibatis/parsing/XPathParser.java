@@ -41,15 +41,17 @@ import org.xml.sax.SAXParseException;
 
 /**
  * @author Clinton Begin
+ * 通过XPath解析XML文件
  */
 public class XPathParser {
 
-  private Document document;
-  private boolean validation;
-  private EntityResolver entityResolver;
-  private Properties variables;
-  private XPath xpath;
+  private Document document; //Document 对象
+  private boolean validation; // 是否开启验证
+  private EntityResolver entityResolver; // 加在本地DTD，由XMLMapperEntityResolver实现，参照XMLLanguageDriver
+  private Properties variables; //<properties> 定义的属性
+  private XPath xpath;  //XPath 对象
 
+  // 一系列构造函数
   public XPathParser(String xml) {
     commonConstructor(false, null, null);
     this.document = createDocument(new InputSource(new StringReader(xml)));
@@ -129,7 +131,7 @@ public class XPathParser {
     commonConstructor(validation, variables, entityResolver);
     this.document = document;
   }
-
+  // 解析值
   public void setVariables(Properties variables) {
     this.variables = variables;
   }
@@ -137,7 +139,7 @@ public class XPathParser {
   public String evalString(String expression) {
     return evalString(document, expression);
   }
-
+  // String 解析的时候会调用PropertyParser，对<propertity>中定义的参数进行替换
   public String evalString(Object root, String expression) {
     String result = (String) evaluate(expression, root, XPathConstants.STRING);
     result = PropertyParser.parse(result, variables);
@@ -208,7 +210,7 @@ public class XPathParser {
   public XNode evalNode(String expression) {
     return evalNode(document, expression);
   }
-
+  // 返回封装的DOM Node
   public XNode evalNode(Object root, String expression) {
     Node node = (Node) evaluate(expression, root, XPathConstants.NODE);
     if (node == null) {
@@ -224,7 +226,7 @@ public class XPathParser {
       throw new BuilderException("Error evaluating XPath.  Cause: " + e, e);
     }
   }
-
+  // 创建Document 用以解析XML
   private Document createDocument(InputSource inputSource) {
     // important: this must only be called AFTER common constructor
     try {
@@ -259,7 +261,7 @@ public class XPathParser {
       throw new BuilderException("Error creating document instance.  Cause: " + e, e);
     }
   }
-
+  // 构造初始化
   private void commonConstructor(boolean validation, Properties variables, EntityResolver entityResolver) {
     this.validation = validation;
     this.entityResolver = entityResolver;

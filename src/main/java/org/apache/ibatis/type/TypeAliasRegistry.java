@@ -34,11 +34,13 @@ import org.apache.ibatis.io.Resources;
 
 /**
  * @author Clinton Begin
+ * 注册别名
  */
 public class TypeAliasRegistry {
 
   private final Map<String, Class<?>> TYPE_ALIASES = new HashMap<String, Class<?>>();
 
+  // 系统内置别名
   public TypeAliasRegistry() {
     registerAlias("string", String.class);
 

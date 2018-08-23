@@ -17,6 +17,7 @@ package org.apache.ibatis.parsing;
 
 /**
  * @author Clinton Begin
+ * 仅查找占位符，如何处理由具体的TokenHandler处理
  */
 public class GenericTokenParser {
 
@@ -29,7 +30,7 @@ public class GenericTokenParser {
     this.closeToken = closeToken;
     this.handler = handler;
   }
-
+  // 解析 ${ } 内的变量
   public String parse(String text) {
     StringBuilder builder = new StringBuilder();
     if (text != null && text.length() > 0) {
@@ -39,6 +40,7 @@ public class GenericTokenParser {
       while (start > -1) {
         if (start > 0 && src[start - 1] == '\\') {
           // the variable is escaped. remove the backslash.
+          // 转义字符直接追加
           builder.append(src, offset, start - offset - 1).append(openToken);
           offset = start + openToken.length();
         } else {

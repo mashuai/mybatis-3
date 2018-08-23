@@ -45,27 +45,27 @@ import org.apache.ibatis.reflection.property.PropertyNamer;
  */
 public class Reflector {
 
-  private static boolean classCacheEnabled = true;
-  private static final String[] EMPTY_STRING_ARRAY = new String[0];
-  private static final ConcurrentMap<Class<?>, Reflector> REFLECTOR_MAP = new ConcurrentHashMap<Class<?>, Reflector>();
+  private static boolean classCacheEnabled = true; // 是否开启缓存
+  private static final String[] EMPTY_STRING_ARRAY = new String[0]; // 初始空数组
+  private static final ConcurrentMap<Class<?>, Reflector> REFLECTOR_MAP = new ConcurrentHashMap<Class<?>, Reflector>(); //缓存解析的类
 
   private Class<?> type;
-  private String[] readablePropertyNames = EMPTY_STRING_ARRAY;
-  private String[] writeablePropertyNames = EMPTY_STRING_ARRAY;
-  private Map<String, Invoker> setMethods = new HashMap<String, Invoker>();
-  private Map<String, Invoker> getMethods = new HashMap<String, Invoker>();
-  private Map<String, Class<?>> setTypes = new HashMap<String, Class<?>>();
-  private Map<String, Class<?>> getTypes = new HashMap<String, Class<?>>();
-  private Constructor<?> defaultConstructor;
+  private String[] readablePropertyNames = EMPTY_STRING_ARRAY; // get方法名集合
+  private String[] writeablePropertyNames = EMPTY_STRING_ARRAY; // set方法名集合
+  private Map<String, Invoker> setMethods = new HashMap<String, Invoker>(); // get 方法 key是属性名，下同
+  private Map<String, Invoker> getMethods = new HashMap<String, Invoker>(); // set 方法
+  private Map<String, Class<?>> setTypes = new HashMap<String, Class<?>>(); // set方法参数类型
+  private Map<String, Class<?>> getTypes = new HashMap<String, Class<?>>();  // get方法返回值类型
+  private Constructor<?> defaultConstructor;  //默认构造函数
 
-  private Map<String, String> caseInsensitivePropertyMap = new HashMap<String, String>();
+  private Map<String, String> caseInsensitivePropertyMap = new HashMap<String, String>(); //所有属性名的集合
 
   private Reflector(Class<?> clazz) {
     type = clazz;
-    addDefaultConstructor(clazz);
-    addGetMethods(clazz);
-    addSetMethods(clazz);
-    addFields(clazz);
+    addDefaultConstructor(clazz); // 解析构造函数
+    addGetMethods(clazz); // 解析get方法
+    addSetMethods(clazz);  // 解析set方法
+    addFields(clazz); // 解析字段
     readablePropertyNames = getMethods.keySet().toArray(new String[getMethods.keySet().size()]);
     writeablePropertyNames = setMethods.keySet().toArray(new String[setMethods.keySet().size()]);
     for (String propName : readablePropertyNames) {
@@ -93,7 +93,7 @@ public class Reflector {
       }
     }
   }
-
+  // get由两种，一种是get，一种是is，如果是boolean 则会试用is，比如试用lombok默认对boolean使用is，而Boolean则会使用get
   private void addGetMethods(Class<?> cls) {
     Map<String, List<Method>> conflictingGetters = new HashMap<String, List<Method>>();
     Method[] methods = getClassMethods(cls);
@@ -275,6 +275,7 @@ public class Reflector {
    *
    * @param cls The class
    * @return An array containing all methods in this class
+   * 获取包括其父类的方法
    */
   private Method[] getClassMethods(Class<?> cls) {
     Map<String, Method> uniqueMethods = new HashMap<String, Method>();
@@ -462,6 +463,7 @@ public class Reflector {
    *
    * @param clazz The class for which to lookup the method cache.
    * @return The method cache for the class
+   * 单例调用，如果设置缓存，直接缓存。
    */
   public static Reflector forClass(Class<?> clazz) {
     if (classCacheEnabled) {
