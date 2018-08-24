@@ -40,10 +40,10 @@ public class  MapperProxy<T> implements InvocationHandler, Serializable {
     this.mapperInterface = mapperInterface;
     this.methodCache = methodCache;
   }
-
+  // 代理Mapper 执行sql
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-    if (Object.class.equals(method.getDeclaringClass())) { // 判断是否是类，如果不是执行代理的方法，是执行类方法
+    if (Object.class.equals(method.getDeclaringClass())) {
       try {
         return method.invoke(this, args);
       } catch (Throwable t) {

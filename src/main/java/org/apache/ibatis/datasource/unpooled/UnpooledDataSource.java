@@ -34,6 +34,7 @@ import org.apache.ibatis.io.Resources;
 /**
  * @author Clinton Begin
  * @author Eduardo Macarron
+ * 无连接池，没吃getConnection 创建新连接
  */
 public class UnpooledDataSource implements DataSource {
   
@@ -47,7 +48,7 @@ public class UnpooledDataSource implements DataSource {
   private String password;
 
   private Boolean autoCommit;
-  private Integer defaultTransactionIsolationLevel;
+  private Integer defaultTransactionIsolationLevel;//事务隔离级别
 
   static {
     Enumeration<Driver> drivers = DriverManager.getDrivers();

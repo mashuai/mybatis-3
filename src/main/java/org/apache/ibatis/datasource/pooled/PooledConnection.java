@@ -25,6 +25,7 @@ import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
  * @author Clinton Begin
+ * 包装Connection对象
  */
 class PooledConnection implements InvocationHandler {
 
@@ -33,11 +34,11 @@ class PooledConnection implements InvocationHandler {
 
   private int hashCode = 0;
   private PooledDataSource dataSource;
-  private Connection realConnection;
-  private Connection proxyConnection;
-  private long checkoutTimestamp;
-  private long createdTimestamp;
-  private long lastUsedTimestamp;
+  private Connection realConnection; // 真正的连接
+  private Connection proxyConnection; // 代理链接
+  private long checkoutTimestamp; // 从连接池中取出连接的时间戳
+  private long createdTimestamp;  //连接创建的时间戳
+  private long lastUsedTimestamp; // 最后被试用的时间戳
   private int connectionTypeCode;
   private boolean valid;
 
@@ -228,6 +229,7 @@ class PooledConnection implements InvocationHandler {
    * @param method - the method to be executed
    * @param args   - the parameters to be passed to the method
    * @see java.lang.reflect.InvocationHandler#invoke(Object, java.lang.reflect.Method, Object[])
+   * 调用close方法时直接将连接push会连接池
    */
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {

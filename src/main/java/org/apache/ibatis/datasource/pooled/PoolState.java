@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * @author Clinton Begin
+ * 连接池状态管理，空闲和活跃的连接
  */
 public class PoolState {
 

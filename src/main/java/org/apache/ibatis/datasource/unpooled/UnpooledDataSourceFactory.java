@@ -26,6 +26,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 
 /**
  * @author Clinton Begin
+ * 创建UnpooledDataSource
  */
 public class UnpooledDataSourceFactory implements DataSourceFactory {
 
@@ -37,7 +38,7 @@ public class UnpooledDataSourceFactory implements DataSourceFactory {
   public UnpooledDataSourceFactory() {
     this.dataSource = new UnpooledDataSource();
   }
-
+  // 遍历driver开头的属性，设置不同的值
   @Override
   public void setProperties(Properties properties) {
     Properties driverProperties = new Properties();

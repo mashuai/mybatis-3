@@ -35,6 +35,7 @@ import org.apache.ibatis.transaction.Transaction;
  */
 /**
  * @author Clinton Begin
+ * 由容器控制事务
  */
 public class ManagedTransaction implements Transaction {
 

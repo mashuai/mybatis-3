@@ -31,6 +31,7 @@ import org.apache.ibatis.logging.LogFactory;
  * Provides a very simple API for accessing resources within an application server.
  * 
  * @author Ben Gunter
+ * 获取服务器资源
  */
 public abstract class VFS {
   private static final Log log = LogFactory.getLog(ResolverUtil.class);

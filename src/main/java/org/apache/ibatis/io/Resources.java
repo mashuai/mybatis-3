@@ -29,6 +29,7 @@ import java.util.Properties;
  * A class to simplify access to resources through the classloader.
  *
  * @author Clinton Begin
+ * 静态类，获取支持各种ClassLoaderWrapper方法
  */
 public class Resources {
 

@@ -37,6 +37,7 @@ import java.util.concurrent.locks.ReadWriteLock;
  * </pre>
  *
  * @author Clinton Begin
+ * 缓存使用装饰器模式
  */
 
 public interface Cache {

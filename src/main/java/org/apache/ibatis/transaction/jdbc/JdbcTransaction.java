@@ -36,14 +36,15 @@ import org.apache.ibatis.transaction.TransactionException;
  */
 /**
  * @author Clinton Begin
+ * MyBatis控制事务
  */
 public class JdbcTransaction implements Transaction {
 
   private static final Log log = LogFactory.getLog(JdbcTransaction.class);
 
-  protected Connection connection;
+  protected Connection connection;  // 事务对应连接
   protected DataSource dataSource;
-  protected TransactionIsolationLevel level;
+  protected TransactionIsolationLevel level; // 事务隔离级别
   protected boolean autoCommmit;
 
   public JdbcTransaction(DataSource ds, TransactionIsolationLevel desiredLevel, boolean desiredAutoCommit) {

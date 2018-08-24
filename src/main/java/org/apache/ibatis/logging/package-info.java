@@ -15,6 +15,6 @@
  */
 /**
  * TODO fillme.
- * 日志相关
+ * 日志相关,对各种日志框架的适配
  */
 package org.apache.ibatis.logging;

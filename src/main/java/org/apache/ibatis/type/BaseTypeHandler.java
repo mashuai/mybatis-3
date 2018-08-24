@@ -26,6 +26,7 @@ import org.apache.ibatis.session.Configuration;
 /**
  * @author Clinton Begin
  * @author Simone Tripodi
+ * 实现TypeHandler的抽象类，应用中可以通过继承BaseTypeHandler自定义转换
  */
 public abstract class BaseTypeHandler<T> extends TypeReference<T> implements TypeHandler<T> {
 

@@ -22,6 +22,7 @@ import java.sql.SQLException;
 
 /**
  * @author Clinton Begin
+ * JdbcType 和JavaType的互相转换
  */
 public interface TypeHandler<T> {
 

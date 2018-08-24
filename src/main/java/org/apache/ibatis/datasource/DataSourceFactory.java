@@ -20,11 +20,12 @@ import javax.sql.DataSource;
 
 /**
  * @author Clinton Begin
+ * 工厂接口
  */
 public interface DataSourceFactory {
-
+  // 设置数据源相关属性
   void setProperties(Properties props);
-
+// 获取数据源接口
   DataSource getDataSource();
 
 }

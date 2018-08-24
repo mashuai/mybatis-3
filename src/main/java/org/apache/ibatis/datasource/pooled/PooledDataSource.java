@@ -36,6 +36,7 @@ import org.apache.ibatis.logging.LogFactory;
  * This is a simple, synchronous, thread-safe database connection pool.
  *
  * @author Clinton Begin
+ * 线程安全的连接池实现
  */
 public class PooledDataSource implements DataSource {
 
@@ -324,7 +325,7 @@ public class PooledDataSource implements DataSource {
   private int assembleConnectionTypeCode(String url, String username, String password) {
     return ("" + url + username + password).hashCode();
   }
-
+  // 添加连接
   protected void pushConnection(PooledConnection conn) throws SQLException {
 
     synchronized (state) {
@@ -343,7 +344,7 @@ public class PooledDataSource implements DataSource {
           if (log.isDebugEnabled()) {
             log.debug("Returned connection " + newConn.getRealHashCode() + " to pool.");
           }
-          state.notifyAll();
+          state.notifyAll();// 通知pop 有可用连接
         } else {
           state.accumulatedCheckoutTime += conn.getCheckoutTime();
           if (!conn.getRealConnection().getAutoCommit()) {
@@ -363,16 +364,16 @@ public class PooledDataSource implements DataSource {
       }
     }
   }
-
+  // 获取连接
   private PooledConnection popConnection(String username, String password) throws SQLException {
     boolean countedWait = false;
     PooledConnection conn = null;
     long t = System.currentTimeMillis();
     int localBadConnectionCount = 0;
-
+    // 循环，直到获取连接
     while (conn == null) {
-      synchronized (state) {
-        if (!state.idleConnections.isEmpty()) {
+      synchronized (state) { // 加锁
+        if (!state.idleConnections.isEmpty()) { // 检查空闲连接是否非空，非空直接返回
           // Pool has available connection
           conn = state.idleConnections.remove(0);
           if (log.isDebugEnabled()) {
@@ -380,6 +381,7 @@ public class PooledDataSource implements DataSource {
           }
         } else {
           // Pool does not have available connection
+          // 检查是否可创建连接，可以直接创建
           if (state.activeConnections.size() < poolMaximumActiveConnections) {
             // Can create new connection
             conn = new PooledConnection(dataSource.getConnection(), this);
@@ -388,6 +390,7 @@ public class PooledDataSource implements DataSource {
             }
           } else {
             // Cannot create new connection
+            // 无法创建连接继续检查活跃连接是否超时，超时关闭
             PooledConnection oldestActiveConnection = state.activeConnections.get(0);
             long longestCheckoutTime = oldestActiveConnection.getCheckoutTime();
             if (longestCheckoutTime > poolMaximumCheckoutTime) {
@@ -406,6 +409,7 @@ public class PooledDataSource implements DataSource {
               }
             } else {
               // Must wait
+              // 无超时，等待
               try {
                 if (!countedWait) {
                   state.hadToWaitCount++;
@@ -468,6 +472,7 @@ public class PooledDataSource implements DataSource {
    *
    * @param conn - the connection to check
    * @return True if the connection is still usable
+   * 试用Ping检查连接是否可用，比select 1 效率更高
    */
   protected boolean pingConnection(PooledConnection conn) {
     boolean result = true;

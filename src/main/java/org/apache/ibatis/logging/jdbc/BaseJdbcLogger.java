@@ -31,6 +31,7 @@ import org.apache.ibatis.logging.Log;
  * 
  * @author Clinton Begin
  * @author Eduardo Macarron
+ * 打印JDBC相关日志
  */
 public abstract class BaseJdbcLogger {
 

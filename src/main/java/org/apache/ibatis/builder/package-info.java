@@ -15,5 +15,6 @@
  */
 /**
  * Base package for the Configuration building code
+ * 是够Builder模式构造各种配置
  */
 package org.apache.ibatis.builder;

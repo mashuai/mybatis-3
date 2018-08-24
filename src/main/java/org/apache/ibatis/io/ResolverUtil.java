@@ -55,6 +55,7 @@ import org.apache.ibatis.logging.LogFactory;
  * </pre>
  *
  * @author Tim Fennell
+ * 根据条件查找包中的类，条件通过实现Test接口使用
  */
 public class ResolverUtil<T> {
   /*
@@ -77,6 +78,7 @@ public class ResolverUtil<T> {
   /**
    * A Test that checks to see if each class is assignable to the provided class. Note
    * that this test will match the parent type itself if it is presented for matching.
+   * 是否继承
    */
   public static class IsA implements Test {
     private Class<?> parent;
@@ -101,6 +103,7 @@ public class ResolverUtil<T> {
   /**
    * A Test that checks to see if each class is annotated with a specific annotation. If it
    * is, then the test returns true, otherwise false.
+   * 是否有注解
    */
   public static class AnnotatedWith implements Test {
     private Class<? extends Annotation> annotation;
@@ -146,6 +149,7 @@ public class ResolverUtil<T> {
    * ClassLoader has been set by the calling, the context class loader will be used.
    *
    * @return the ClassLoader that will be used to scan for classes
+   * 试用线程上下文提供的ClassLoader
    */
   public ClassLoader getClassLoader() {
     return classloader == null ? Thread.currentThread().getContextClassLoader() : classloader;

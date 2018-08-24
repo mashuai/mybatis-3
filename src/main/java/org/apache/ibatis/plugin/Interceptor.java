@@ -19,13 +19,15 @@ import java.util.Properties;
 
 /**
  * @author Clinton Begin
+ * 可以做分页，分表，对sql检测等
  */
 public interface Interceptor {
 
+  // 拦截逻辑
   Object intercept(Invocation invocation) throws Throwable;
-
+  // 是否试用拦截
   Object plugin(Object target);
-
+  // plugin配置
   void setProperties(Properties properties);
 
 }

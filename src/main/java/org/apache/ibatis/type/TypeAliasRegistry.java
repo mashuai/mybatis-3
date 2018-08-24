@@ -139,7 +139,7 @@ public class TypeAliasRegistry {
       }
     }
   }
-
+  // 扫描包，找到Alias注解注册别名
   public void registerAlias(Class<?> type) {
     String alias = type.getSimpleName();
     Alias aliasAnnotation = type.getAnnotation(Alias.class);

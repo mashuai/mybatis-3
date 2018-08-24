@@ -30,6 +30,7 @@ import org.apache.ibatis.type.JdbcType;
 
 /**
  * @author Clinton Begin
+ * 对SQL进行解析，解析#{}占位替换为?
  */
 public class SqlSourceBuilder extends BaseBuilder {
 

@@ -15,5 +15,6 @@
  */
 /**
  * Base package for languages.
+ * 动态 sql
  */
 package org.apache.ibatis.scripting;

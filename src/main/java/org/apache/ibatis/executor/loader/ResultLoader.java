@@ -36,6 +36,7 @@ import org.apache.ibatis.transaction.TransactionFactory;
 
 /**
  * @author Clinton Begin
+ * 获取结果
  */
 public class ResultLoader {
 

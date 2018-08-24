@@ -40,16 +40,16 @@ import org.apache.ibatis.session.SqlSession;
  * 
  * The default implementation for {@link SqlSession}.
  * Note that this class is not Thread-Safe.
- * 
+ * SqlSession非线程安全，打开必须关闭，可以使用Java 7提供的 try-with-resource自动关闭，防止忘记
  * @author Clinton Begin
  */
 public class DefaultSqlSession implements SqlSession {
 
-  private Configuration configuration;
-  private Executor executor;
+  private Configuration configuration; // 配置类
+  private Executor executor;  // 底层执行类
 
   private boolean autoCommit;
-  private boolean dirty;
+  private boolean dirty;// 缓存中是否有脏数据
   
   public DefaultSqlSession(Configuration configuration, Executor executor, boolean autoCommit) {
     this.configuration = configuration;

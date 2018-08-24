@@ -37,15 +37,15 @@ import java.util.*;
  */
 public class MapperMethod {
 
-  private final SqlCommand command;
-  private final MethodSignature method;
+  private final SqlCommand command;// 内部类，记录sql的名字和类型
+  private final MethodSignature method; // 内部类，mapper接口方法签名
 
   public MapperMethod(Class<?> mapperInterface, Method method, Configuration config) {
     this.command = new SqlCommand(config, mapperInterface, method);
     this.method = new MethodSignature(config, method);
   }
 
-  // 执行sql
+  // 执行sql，insert，update，select，delete
   public Object execute(SqlSession sqlSession, Object[] args) {
     Object result;
     if (SqlCommandType.INSERT == command.getType()) {
@@ -223,8 +223,8 @@ public class MapperMethod {
     private final String mapKey;
     private final Integer resultHandlerIndex;
     private final Integer rowBoundsIndex;
-    private final SortedMap<Integer, String> params;
-    private final boolean hasNamedParameters;
+    private final SortedMap<Integer, String> params; // 参数位置和参数名的对应关系
+    private final boolean hasNamedParameters; // 是否有@Param注解
 
     public MethodSignature(Configuration configuration, Method method) {
       this.returnType = method.getReturnType();
